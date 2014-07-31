@@ -21,12 +21,9 @@ h1,h2 {
 }
 
 #map {
+  margin-bottom: 60px;
   text-align: center;
-  width: 1000px;
-  height: 780px;
-  margin: 20px auto;
-  padding: 10px;
-  font-size: 19px;
+  font-size: 15px;
   line-height: 1.05;
   letter-spacing: 3px;
 }
