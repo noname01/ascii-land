@@ -1,0 +1,10 @@
+{
+  "name": "chessboard",
+  "description": "universal multiplayer chess app",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.x",
+    "jade": "1.x",
+    "socket.io": "^1.0.6"
+  }
+}

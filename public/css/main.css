@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: #777;
+}
+
+body {
+  font-family: "monospace";
+  background-color: black;
+}
+
+h1,h2 {
+  text-align: center;
+}
+
+#map {
+  width: 1000px;
+  height: 700px;
+  border: 1px solid #CCC;
+  margin: 20px auto;
+  padding: 10px;
+  font-size: 20px;
+  line-height: 0.8;
+  letter-spacing: 2px;
+}
