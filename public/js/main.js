@@ -1,26 +1,28 @@
 
-var height = 40
-var width = 70
-var map = []
+Map.init()
 
-for(var i = 0; i < height; i++){
-  map.push("......................................................................")
-}
-
-
-$("#map").text(map.join("\n"))
-
-function replaceAt(str, index, char){
-  return str.substr(0, index) + char + str.substr(index+char.length);
-}
-
+// socket.io stuff
 var socket = io();
 
-socket.on("updateUserCount", function(obj){
-  console.log(obj)
-  var count = obj.userCount
-  map[obj.y] = replaceAt(map[obj.y], obj.x, 'P')
-  console.log("changed to " + count)
+socket.on("init new user", function(users){
+  for(id in users)
+    if(users.hasOwnProperty(id)){
+      Map.setXY(users[id].x, users[id].y, 'P')
+    }
+  Map.rerender()
+})
+
+socket.on("update user count", function(count){
+  console.log(count)
   $("#userCount").text(count)
-  $("#map").text(map.join("\n"))
+})
+
+socket.on("new user", function(user){
+  Map.setXY(user.x, user.y, 'P')
+  Map.rerender()
+})
+
+socket.on("disconnect user", function(user){
+  Map.setXY(user.x, user.y, '.')
+  Map.rerender()
 })

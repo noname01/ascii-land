@@ -1,46 +1,45 @@
 
-var express = require("express");
-var app = express();
+var express = require("express")
+var app = express()
 
-var server = require("http").Server(app);
-var io = require("socket.io")(server);
+var server = require("http").Server(app)
+var io = require("socket.io")(server)
 
-app.set("view engine", "jade");
+app.set("view engine", "jade")
 
 //static middleware
-var oneDay = 86400000;
-app.use(express.compress());
-app.use(express.static(__dirname + '/public', { maxAge: oneDay }));
+var oneDay = 86400000
+app.use(express.compress())
+app.use(express.static(__dirname + '/public', { maxAge: oneDay }))
 
 app.get("/", function(req, res){
-  res.render("index");
-});
+  res.render("index")
+})
 
 server.listen(8080, function(){
-  console.log("Listening on port %d", server.address().port);
-});
+  console.log("Listening on port %d", server.address().port)
+})
 
-
-var userCount = 0;
-
-var users = []
-
+var users = {}
+var userCount = 0
 io.on("connection", function(socket){
-	userCount++;
-	var posX = Math.floor(Math.random()*70)
-  var posY = Math.floor(Math.random()*40)
-  var newUser = {
-	  id: userCount,
-	  x: posX,
-	  y: posY
-  }
-  socket.emit("init", users)
-	users.push(newUser)
 
-	io.emit("newUser", newUser);
+  socket.emit("init new user", users)
+
+  var newId = socket.id
+  users[newId] = {
+    x: Math.floor(Math.random()*70),
+    y: Math.floor(Math.random()*40)
+  }
+  userCount++
+  io.emit("update user count", userCount)
+  io.emit("new user", users[newId])
 
 	socket.on("disconnect", function(){
-		userCount--;
-		io.emit("updateUserCount", userCount);
+	  var oldId = socket.id
+		io.emit("disconnect user", users[oldId])
+		delete users[oldId]
+		userCount--
+		io.emit("update user count", userCount)
 	})
 })
