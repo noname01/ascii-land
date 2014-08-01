@@ -1,34 +1,35 @@
 var Map = (function(){
-  var height = 40
-  var width = 70
+  var height = 35
+  var width = 60
   var a = []
 
-  function init(){
-    var row = ""
-    for(var i = 0; i < width; i++)
-      row += "."
-    for(var i = 0; i < height; i++)
-      a.push(row)
-    rerender()
-  }
+  var map = $("table")
 
-  function rerender(){
-    $("#map").text(a.join("\n"))
+  function init(){
+    for(var i = 0; i < height; i++){
+      var row = $("<tr></tr>")
+      var a1 = []
+      for(var j = 0; j < width; j++){
+        a1.push(".")
+        row.append("<td id='a_" + i + "_" + j + "'>.</td>")
+      }
+      map.append(row)
+      a.push(a1)
+    }
   }
 
   function setXY(x, y, ch){
-    a[y] = replaceAt(a[y], x, ch)
+    a[x][y] = ch;
+    mapXY(x, y).text(ch)
   }
 
-  // helpers
-  function replaceAt(str, index, char){
-    return str.substr(0, index) + char + str.substr(index+char.length);
+  function mapXY(x, y){
+    return $("#a_" + x + "_" + y)
   }
 
   // public api
   return {
     init: init,
-    rerender: rerender,
     setXY: setXY
   }
 })();

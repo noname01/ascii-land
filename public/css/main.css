@@ -20,10 +20,11 @@ h1,h2 {
   margin: 30px;
 }
 
-#map {
-  margin-bottom: 60px;
-  text-align: center;
-  font-size: 15px;
-  line-height: 1.05;
-  letter-spacing: 3px;
+table {
+  margin: 60px auto;
+}
+
+table td {
+  line-height: 0.85;
+  font-size: 23px;
 }

@@ -20,6 +20,10 @@ server.listen(8080, function(){
   console.log("Listening on port %d", server.address().port)
 })
 
+
+var height = 35
+var width = 60
+
 var users = {}
 var userCount = 0
 io.on("connection", function(socket){
@@ -28,8 +32,8 @@ io.on("connection", function(socket){
 
   var newId = socket.id
   users[newId] = {
-    x: Math.floor(Math.random()*70),
-    y: Math.floor(Math.random()*40)
+    x: Math.floor(Math.random() * height),
+    y: Math.floor(Math.random() * width)
   }
   userCount++
   io.emit("update user count", userCount)

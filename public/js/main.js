@@ -9,7 +9,6 @@ socket.on("init new user", function(users){
     if(users.hasOwnProperty(id)){
       Map.setXY(users[id].x, users[id].y, 'P')
     }
-  Map.rerender()
 })
 
 socket.on("update user count", function(count){
@@ -19,10 +18,8 @@ socket.on("update user count", function(count){
 
 socket.on("new user", function(user){
   Map.setXY(user.x, user.y, 'P')
-  Map.rerender()
 })
 
 socket.on("disconnect user", function(user){
   Map.setXY(user.x, user.y, '.')
-  Map.rerender()
 })
