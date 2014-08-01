@@ -27,13 +27,14 @@ var width = 60
 var users = {}
 var userCount = 0
 io.on("connection", function(socket){
-
+  var newId = socket.id
   socket.emit("init new user", users)
 
-  var newId = socket.id
   users[newId] = {
+    id: newId,
     x: Math.floor(Math.random() * height),
-    y: Math.floor(Math.random() * width)
+    y: Math.floor(Math.random() * width),
+    letter: 'P'
   }
   userCount++
   io.emit("update user count", userCount)
