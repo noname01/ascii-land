@@ -1,6 +1,6 @@
 var Map = (function(){
-  var height = 35
-  var width = 60
+  var height = 30
+  var width = 50
   var a = []
 
   var map = $("table")
@@ -29,6 +29,8 @@ var Map = (function(){
 
   // public api
   return {
+    height: height,
+    width: width,
     init: init,
     setXY: setXY
   }

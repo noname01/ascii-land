@@ -21,8 +21,8 @@ server.listen(8080, function(){
 })
 
 
-var height = 35
-var width = 60
+var height = 30
+var width = 50
 
 var users = {}
 var userCount = 0
@@ -42,6 +42,9 @@ io.on("connection", function(socket){
 
 	socket.on("disconnect", function(){
 	  var oldId = socket.id
+	  socket.on("user move", function(user){
+	    socket.broadcast.emit("user move", user)
+	  })
 		io.emit("disconnect user", users[oldId])
 		delete users[oldId]
 		userCount--
