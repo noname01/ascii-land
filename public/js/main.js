@@ -64,7 +64,7 @@ $(window).bind('keyup', function(e){
 })
 
 function moveTo(x1, y1){
-  if(x1 >= 0 && y1 >= 0 && x1 < Map.height && y1 < Map.width){
+  if(x1 >= 0 && y1 >= 0 && x1 < Map.height && y1 < Map.width && Map.getXY(x1, y1) == "."){
     Map.setXY(me.x, me.y, ".")
     me.x = x1
     me.y = y1

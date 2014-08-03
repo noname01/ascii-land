@@ -38,7 +38,7 @@ io.on("connection", function(socket){
   io.emit("new user", users[newId])
 
 	socket.on("user move", function(user){
-	  console.log(user)
+	  //console.log(user)
 	  users[user.id].x = user.x
 	  users[user.id].y = user.y
 	  socket.broadcast.emit("user move", user)

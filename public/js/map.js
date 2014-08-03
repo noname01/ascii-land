@@ -23,6 +23,10 @@ var Map = (function(){
     mapXY(x, y).text(ch)
   }
 
+  function getXY(x, y){
+    return a[x][y]
+  }
+
   function mapXY(x, y){
     return $("#a_" + x + "_" + y)
   }
@@ -38,6 +42,7 @@ var Map = (function(){
     width: width,
     init: init,
     updateUserCount: updateUserCount,
-    setXY: setXY
+    setXY: setXY,
+    getXY: getXY
   }
 })();
