@@ -21,11 +21,10 @@ server.listen(8080, function(){
 })
 
 
-var height = 30
+var height = 25
 var width = 50
 
 var users = {}
-var userCount = 0
 io.on("connection", function(socket){
   var newId = socket.id
   socket.emit("init new user", users)
@@ -36,18 +35,18 @@ io.on("connection", function(socket){
     y: Math.floor(Math.random() * width),
     letter: 'P'
   }
-  userCount++
-  io.emit("update user count", userCount)
   io.emit("new user", users[newId])
+
+	socket.on("user move", function(user){
+	  console.log(user)
+	  users[user.id].x = user.x
+	  users[user.id].y = user.y
+	  socket.broadcast.emit("user move", user)
+	})
 
 	socket.on("disconnect", function(){
 	  var oldId = socket.id
-	  socket.on("user move", function(user){
-	    socket.broadcast.emit("user move", user)
-	  })
-		io.emit("disconnect user", users[oldId])
+		socket.broadcast.emit("disconnect user", users[oldId])
 		delete users[oldId]
-		userCount--
-		io.emit("update user count", userCount)
 	})
 })

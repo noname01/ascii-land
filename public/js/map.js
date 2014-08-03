@@ -1,5 +1,5 @@
 var Map = (function(){
-  var height = 30
+  var height = 25
   var width = 50
   var a = []
 
@@ -27,11 +27,17 @@ var Map = (function(){
     return $("#a_" + x + "_" + y)
   }
 
+  function updateUserCount(count){
+    $("#userCount").text(count)
+  }
+
+
   // public api
   return {
     height: height,
     width: width,
     init: init,
+    updateUserCount: updateUserCount,
     setXY: setXY
   }
 })();
