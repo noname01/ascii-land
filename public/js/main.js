@@ -2,13 +2,12 @@ var me = {}
 var usersData = {}
 var userCount = 0
 
-Map.init()
-
 // socket.io stuff
 var socket = io()
 
-socket.on("init new user", function(users){
-  usersData = users
+socket.on("init new user", function(data){
+  Map.init(data.map)
+  users = data.users
   for(id in users)
     if(users.hasOwnProperty(id)){
       Map.setXY(users[id].x, users[id].y, users[id].letter)

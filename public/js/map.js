@@ -5,16 +5,13 @@ var Map = (function(){
 
   var map = $("table")
 
-  function init(){
+  function init(mapData){
+    a = mapData
     for(var i = 0; i < height; i++){
       var row = $("<tr></tr>")
-      var a1 = []
-      for(var j = 0; j < width; j++){
-        a1.push(".")
-        row.append("<td id='a_" + i + "_" + j + "'>.</td>")
-      }
+      for(var j = 0; j < width; j++)
+        row.append("<td id='a_" + i + "_" + j + "'>" + a[i][j] + "</td>")
       map.append(row)
-      a.push(a1)
     }
   }
 
