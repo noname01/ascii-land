@@ -8,7 +8,7 @@ function init(){
  for(var i = 0; i < height; i++){
    var a1 = []
    for(var j = 0; j < width; j++){
-     a1.push(".")
+     a1.push(Math.random() < 0.01 ? "#" : ".")
    }
    a.push(a1)
  }

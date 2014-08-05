@@ -1,6 +1,8 @@
 var me = {}
 var usersData = {}
 var userCount = 0
+var allowMove = false
+var allowMoveInterval = 500
 
 // socket.io stuff
 var socket = io()
@@ -46,7 +48,13 @@ socket.on("user move", function(user){
   Map.setXY(user.x, user.y, user.letter)
 })
 
-$(window).bind('keyup', function(e){
+window.setInterval(function(){
+  allowMove = true
+}, allowMoveInterval)
+
+$(window).bind('keydown', function(e){
+  if(!allowMove) return
+  allowMove = false
   var code = e.KeyCode || e.which
   if(code == 37){
     //console.log("left")
