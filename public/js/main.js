@@ -7,22 +7,26 @@ var socket = io()
 
 socket.on("init new user", function(data){
   Map.init(data.map)
-  users = data.users
-  for(id in users)
-    if(users.hasOwnProperty(id)){
-      Map.setXY(users[id].x, users[id].y, users[id].letter)
+  usersData = data.users
+  for(id in usersData)
+    if(usersData.hasOwnProperty(id)){
+      Map.setXY(usersData[id].x, usersData[id].y, usersData[id].letter)
       userCount++
     }
   Map.updateUserCount(userCount)
+
 })
 
 socket.on("new user", function(user){
-  if(user.id == socket.io.engine.id){
-    //user.letter = "@"
-    me = user
-  }
+  var ch = user.letter
   usersData[user.id] = user
-  Map.setXY(user.x, user.y, user.letter)
+  //console.log("userData", usersData)
+  if(user.id == socket.io.engine.id){
+    me = jQuery.extend({}, user)
+    me.letter = "@"
+    ch = "@"
+  }
+  Map.setXY(user.x, user.y, ch)
   userCount++
   Map.updateUserCount(userCount)
 })
@@ -35,7 +39,7 @@ socket.on("disconnect user", function(user){
 })
 
 socket.on("user move", function(user){
-  console.log("user move", user)
+  //console.log("user move", user)
   Map.setXY(usersData[user.id].x, usersData[user.id].y, '.')
   usersData[user.id].x = user.x
   usersData[user.id].y = user.y
@@ -68,6 +72,8 @@ function moveTo(x1, y1){
     me.x = x1
     me.y = y1
     Map.setXY(x1, y1, me.letter)
-    socket.emit("user move", me)
+    usersData[me.id].x = x1
+    usersData[me.id].y = y1
+    socket.emit("user move", usersData[me.id])
   }
 }

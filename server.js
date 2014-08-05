@@ -35,7 +35,7 @@ io.on("connection", function(socket){
     letter: 'P'
   }
   io.emit("new user", users[newId])
-  console.log("new", users)
+  //console.log("new", users)
 
 	socket.on("user move", function(user){
 	  //console.log(user)
@@ -47,9 +47,9 @@ io.on("connection", function(socket){
 
 	socket.on("disconnect", function(){
 	  var oldId = socket.id
-	  console.log("disconnect", users[oldId])
+	  //console.log("disconnect", users[oldId])
 		socket.broadcast.emit("disconnect user", users[oldId])
 		delete users[oldId]
-		console.log(users)
+		//console.log(users)
 	})
 })
