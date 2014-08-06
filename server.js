@@ -34,7 +34,7 @@ io.on("connection", function(socket){
 	socket.on("user move", function(user){
 	  //console.log(user)
 	  //todo: check position
-	  players.setPos(user.id, user.x, user.y)
+	  players.move(user.id, user.direction)
 	  socket.broadcast.emit("user move", user)
 	})
 

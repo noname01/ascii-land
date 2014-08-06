@@ -20,8 +20,12 @@ function pushNew(newId){
     id: newId,
     x: Math.floor(Math.random() * map.height),
     y: Math.floor(Math.random() * map.width),
+    direction: {
+      x: -1,
+      y: 0
+    },
     letter: 'P',
-    career: "assassin"
+    careerTrait: careers.assassin
   }
   return players[newId]
 }
@@ -38,9 +42,10 @@ function deleteById(id){
   delete players[id]
 }
 
-function setPos(id, x, y){
-  players[id].x = x
-  players[id].y = y
+function move(id, direction){
+  players[id].direction = direction
+  players[id].x += direction.x
+  players[id].y += direction.y
 }
 
 module.exports = {
@@ -48,5 +53,5 @@ module.exports = {
   getAll: getAll,
   getById: getById,
   deleteById: deleteById,
-  setPos: setPos
+  move: move
 }

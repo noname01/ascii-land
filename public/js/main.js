@@ -2,7 +2,6 @@ var me = {}
 var usersData = {}
 var userCount = 0
 var allowMove = true
-var allowMoveInterval = 500
 
 // socket.io stuff
 var socket = io()
@@ -43,6 +42,7 @@ socket.on("disconnect user", function(user){
 socket.on("user move", function(user){
   //console.log("user move", user)
   Map.setXY(usersData[user.id].x, usersData[user.id].y, '.')
+  usersData[user.id].direction = user.direction
   usersData[user.id].x = user.x
   usersData[user.id].y = user.y
   Map.setXY(user.x, user.y, user.letter)
@@ -53,7 +53,7 @@ $(window).bind('keydown', function(e){
   allowMove = false
   window.setTimeout(function(){
     allowMove = true
-  }, allowMoveInterval)
+  }, me.careerTrait.moveDelay)
   var code = e.KeyCode || e.which
   if(code == 37){
     //console.log("left")
@@ -76,11 +76,15 @@ $(window).bind('keydown', function(e){
 function moveTo(x1, y1){
   if(x1 >= 0 && y1 >= 0 && x1 < Map.height && y1 < Map.width && Map.getXY(x1, y1) == "."){
     Map.setXY(me.x, me.y, ".")
+    me.direction.x = x1 - me.x
+    me.direction.y = y1 - me.y
+    console.log(me.direction)
     me.x = x1
     me.y = y1
     Map.setXY(x1, y1, me.letter)
     usersData[me.id].x = x1
     usersData[me.id].y = y1
+    usersData[me.id].direction = me.direction
     socket.emit("user move", usersData[me.id])
   }
 }
