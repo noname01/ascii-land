@@ -1,5 +1,6 @@
 var express = require("express")
 var map = require("./mapData.js")
+var players = require("./players.js")
 var app = express()
 
 var server = require("http").Server(app)
@@ -22,34 +23,24 @@ server.listen(8080, function(){
 
 map.init()
 
-var users = {}
-
 io.on("connection", function(socket){
   var newId = socket.id
-  socket.emit("init new user", {users: users, map: map.getMap()})
+  socket.emit("init new user", {users: players.getAll(), map: map.getMap()})
 
-  users[newId] = {
-    id: newId,
-    x: Math.floor(Math.random() * map.height),
-    y: Math.floor(Math.random() * map.width),
-    letter: 'P'
-  }
-  io.emit("new user", users[newId])
-  //console.log("new", users)
+  var newUser = players.pushNew(newId)
+
+  io.emit("new user", newUser)
 
 	socket.on("user move", function(user){
 	  //console.log(user)
 	  //todo: check position
-	  users[user.id].x = user.x
-	  users[user.id].y = user.y
+	  players.setPos(user.id, user.x, user.y)
 	  socket.broadcast.emit("user move", user)
 	})
 
 	socket.on("disconnect", function(){
 	  var oldId = socket.id
-	  //console.log("disconnect", users[oldId])
-		socket.broadcast.emit("disconnect user", users[oldId])
-		delete users[oldId]
-		//console.log(users)
+		socket.broadcast.emit("disconnect user", players.getById(oldId))
+		players.deleteById(oldId)
 	})
 })
