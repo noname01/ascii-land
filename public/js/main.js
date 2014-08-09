@@ -53,7 +53,7 @@ $(window).bind('keydown', function(e){
   allowMove = false
   window.setTimeout(function(){
     allowMove = true
-  }, me.careerTrait.moveDelay)
+  }, me.careerTraits.moveDelay)
   var code = e.KeyCode || e.which
   if(code == 37){
     //console.log("left")
@@ -70,6 +70,9 @@ $(window).bind('keydown', function(e){
   else if(code == 40){
     //console.log("down")
     moveTo(me.x + 1, me.y)
+  }
+  else if(code == 32){
+    socket.emit("user skill", {userId: me.id, skillId: 0})
   }
 })
 

@@ -38,6 +38,11 @@ io.on("connection", function(socket){
 	  socket.broadcast.emit("user move", user)
 	})
 
+	socket.on("user skill", function(data){
+	  var skillUser = players.getById(data.userId)
+	  skillUser.careerTraits.actions.skills[data.skillId]()
+	})
+
 	socket.on("disconnect", function(){
 	  var oldId = socket.id
 		socket.broadcast.emit("disconnect user", players.getById(oldId))

@@ -8,8 +8,11 @@ var careers = {
     hp: 50,
     moveDelay: 100,
     actions: {
+      skills: [function(){
+        console.log("using skill")
+      }],
       collision: function(other){
-        other.hurtby(200)
+        console.log("crash!")
       }
     }
   }
@@ -25,7 +28,7 @@ function pushNew(newId){
       y: 0
     },
     letter: 'P',
-    careerTrait: careers.assassin
+    careerTraits: careers.assassin
   }
   return players[newId]
 }
